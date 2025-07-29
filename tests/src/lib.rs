@@ -288,7 +288,7 @@ macro_rules! test_suite {
     (
         $(async_test: $async_test:ident,)?
         $(test: $test:ident,)?
-        generics: all_curves,
+        generics: stark,
         suites: {$($suites:tt)*}
         $(,)?
     ) => {
