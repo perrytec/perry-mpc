@@ -23,6 +23,11 @@ where
     E: Curve + cggmp21_tests::CurveParams,
     Point<E>: generic_ec::coords::HasAffineX<E>,
 {
+
+    // here's where the private key is sharded. note that in this method, the original private key
+    // is never `created` in the first place, which improves security, simply the shards are
+    // created, and each shard is meant to help sign for the same shared_public_key (in eth, this
+    // shared_public_key would be the eth address)
     let mut rng = DevRng::new();
     let incomplete_shares = run_keygen(t, n, hd_enabled, &mut rng);
     let shares = run_aux_gen(incomplete_shares, &mut rng);
@@ -169,6 +174,7 @@ where
     // this fn below verifies that the signature was created for this message by this public key
     // (by this eth address, basically)
     // eth is compatible with secp256k1 signing, that this lib supports
+    // NOTE that we still have to modify this lib to make it work with eth
     sig.verify(&public_key, &message_to_sign)
         .expect("signature is not valid");
 }
