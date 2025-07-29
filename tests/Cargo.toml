@@ -1,0 +1,58 @@
+[package]
+name = "cggmp21-tests"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+cggmp21 = { workspace = true, features = ["all-curves", "spof", "state-machine"] }
+
+anyhow = { workspace = true }
+serde = { workspace = true, features = ["derive"] }
+serde_json = { workspace = true }
+hex = { workspace = true }
+
+rand = { workspace = true }
+rand_dev = { workspace = true }
+
+sha2 = { workspace = true }
+
+round-based = { workspace = true, features = ["derive", "sim", "state-machine"] }
+generic-ec = { workspace = true, features = ["serde", "all-curves"] }
+
+bpaf = "0.7"
+include_dir = "0.7"
+ciborium = "0.2"
+
+futures = "0.3"
+pin-project = "1"
+
+lazy_static = "1.4"
+
+# external verifiers
+secp256k1 = { version = "0.26", features = ["global-context", "bitcoin-hashes"] }
+starknet-crypto = { version = "0.6" }
+starknet-core = { version = "0.6" }
+starknet-accounts = { version = "0.5" }
+starknet-providers = { version = "0.6" }
+starknet-signers = { version = "0.4" }
+url = "2.4"
+
+[dev-dependencies]
+criterion = "0.5"
+
+[features]
+hd-wallet = ["cggmp21/hd-wallet", "cggmp21/hd-slip10", "cggmp21/hd-stark"]
+
+[[bin]]
+name = "precompute_shares"
+required-features = ["hd-wallet"]
+
+[[bin]]
+name = "measure_perf"
+
+[[bench]]
+name = "exp"
+harness = false

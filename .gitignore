@@ -1,0 +1,8 @@
+/target
+/wasm/no_std/target
+
+.helix/
+.rstags
+
+!spec/main.tex
+spec/main.*

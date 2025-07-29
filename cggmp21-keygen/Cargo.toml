@@ -1,0 +1,41 @@
+[package]
+name = "cggmp21-keygen"
+version = "0.5.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+description = "UC-secure DKG implementation based on CGGMP21 paper"
+repository = "https://github.com/LFDT-Lockness/cggmp21"
+categories = ["algorithms", "cryptography"]
+keywords = ["mpc", "dkg", "threshold-signatures", "tss"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+key-share = { workspace = true, features = ["serde"] }
+hd-wallet = { workspace = true, optional = true }
+
+generic-ec = { workspace = true, features = ["serde", "udigest", "hash-to-scalar"] }
+generic-ec-zkp = { workspace = true, features = ["serde", "udigest"] }
+udigest = { workspace = true, features = ["derive"]}
+
+round-based = { workspace = true, features = ["derive"] }
+
+sha2 = { workspace = true }
+digest = { workspace = true }
+rand_core = { workspace = true }
+
+serde = { workspace = true, features = ["derive"] }
+serde_with = { workspace = true }
+hex = { workspace = true, features = ["serde"] }
+
+futures-util = { workspace = true }
+
+displaydoc = { workspace = true }
+thiserror = { workspace = true, optional = true }
+
+[features]
+default = ["std"]
+
+std = ["thiserror", "key-share/std", "udigest/std"]
+hd-wallet = ["dep:hd-wallet", "key-share/hd-wallet"]
+state-machine = ["round-based/state-machine"]
